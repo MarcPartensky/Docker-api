@@ -11,7 +11,7 @@ app = FastAPI()
 
 @app.get("/")
 async def index():
-    return "hi"
+    return "salut"
 
 
 @app.get("/containers")
