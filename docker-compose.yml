@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  docker_api:
+    image: marcpartensky/docker-api
+    restart: unless-stopped
+    # volumes:
+    #   - "/srv/docker_api:/app"
+    # ports:
+    #  - "8000:80"
