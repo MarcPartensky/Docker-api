@@ -42,11 +42,25 @@ async def container(id: str):
     return client.containers.get(id).attrs
 
 
-@app.get("/container/{id}/logs")
-async def container_logs(id: str):
+@app.get("/container/{id}/exec/{cmd}")
+async def container_exec(id: str, cmd: str):
+    """Return one container."""
+    container = client.containers.get(id)
+    return container.exec_run(cmd)
+
+
+@app.get("/container/{id}/top")
+async def container_top(id: str):
+    """Show processes for all containers"""
+    container = client.containers.get(id)
+    return container.top()
+
+
+@app.get("/container/{id}/logs/{since}")
+async def container_logs(id: str, since: int = 0):
     """Return the logs of a container."""
     container = client.containers.get(id)
-    return container.logs()
+    return container.logs(since=since)
 
 
 @app.post("/container/{id}/restart")
@@ -55,6 +69,14 @@ async def container_restart(id: str):
     container = client.containers.get(id)
     container.restart()
     return "restarted"
+
+
+@app.post("/container/{id}/rename/{name}")
+async def container_rename(id: str, name: str):
+    """Rename a container."""
+    container = client.containers.get(id)
+    container.rename(name)
+    return "renamed to " + name
 
 
 @app.post("/container/{id}/kill")
@@ -74,8 +96,24 @@ async def container_stop(id: str):
 
 
 @app.post("/container/{id}/remove")
-async def container_stop(id: str):
+async def container_remove(id: str):
     """Stop a container."""
     container = client.containers.get(id)
     container.remove()
     return "removed"
+
+
+@app.post("/container/{id}/pause")
+async def container_pause(id: str):
+    """Pause a container."""
+    container = client.containers.get(id)
+    container.pause()
+    return "paused"
+
+
+@app.post("/container/{id}/unpause")
+async def container_unpause(id: str):
+    """Unpause a container."""
+    container = client.containers.get(id)
+    container.unpause()
+    return "unpaused"
