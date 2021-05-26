@@ -57,7 +57,7 @@ async def container_top(id: str):
 
 
 @app.get("/container/{id}/logs/{since}")
-async def container_logs(id: str, since: int = 0):
+async def container_logs(id: str, since: int = 1):
     """Return the logs of a container."""
     container = client.containers.get(id)
     return container.logs(since=since)
