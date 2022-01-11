@@ -5,5 +5,5 @@ run:
 build:
 	docker build . -t marcpartensky/docker-api
 dev: build
-	docker run marcpartensky/docker-api -d
+	docker run -d marcpartensky/docker-api
 
