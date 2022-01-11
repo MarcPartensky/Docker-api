@@ -5,6 +5,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 RUN apt-get install curl -y
+RUN pip install -U pip
 RUN pip install -r requirements.txt
 
 EXPOSE 80
