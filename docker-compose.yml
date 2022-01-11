@@ -4,7 +4,10 @@ services:
   docker_api:
     image: marcpartensky/docker-api
     restart: unless-stopped
-    # volumes:
-    #   - "/srv/docker_api:/app"
-    # ports:
-    #  - "8000:80"
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    ports:
+     - "8080:80"
