@@ -1,10 +1,10 @@
-FROM python:3.9
+FROM python:3.9.4-alpine
 
 COPY . /app
 WORKDIR /app
 
-RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
-RUN apt-get install curl -y
+RUN apk update && apk upgrade && apk fix && apk del
+RUN apk add curl
 RUN pip install -U pip
 RUN pip install -r requirements.txt
 
