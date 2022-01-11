@@ -16,6 +16,11 @@ async def index():
     return "docker-api"
 
 
+@app.get("/live")
+async def healthcheck():
+    return "Ok"
+
+
 @app.get("/images")
 async def images():
     """List all available images."""
@@ -40,7 +45,7 @@ async def ps_one(id: str):
     return client.containers.get(id).attrs
 
 
-@app.get("/exec/{id}/{cmd}")
+@app.post("/exec/{id}/{cmd}")
 async def exec(id: str, cmd: str):
     """Return one container."""
     container = client.containers.get(id)
