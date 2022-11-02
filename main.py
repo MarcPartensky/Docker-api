@@ -7,7 +7,7 @@ from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-client = docker.DockerClient()
+client = docker.from_env()
 
 app = FastAPI()
 
@@ -43,6 +43,10 @@ async def images():
 @app.get("/ps")
 async def ps_all():
     """List all containers."""
+    containers = []
+    for raw_container in client.containers.list():
+        print(raw_container)
+    print(containers)
     return [c.attrs for c in client.containers.list()]
 
 
