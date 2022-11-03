@@ -24,6 +24,7 @@ app.add_middleware(
     allow_headers=[""],
 )
 
+
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
@@ -41,7 +42,6 @@ def custom_openapi():
 
 
 app.openapi = custom_openapi
-
 
 
 @app.get("/")
@@ -158,10 +158,12 @@ async def unpause(id: str):
     container.unpause()
     return "unpaused"
 
+
 if __name__ == "__main__":
     import os, uvicorn
+
     uvicorn.run(
         "app",
         host=os.environ.get("HOST") or "localhost",
-        port=os.environ.get("PORT") or "8000"
+        port=os.environ.get("PORT") or "8000",
     )
