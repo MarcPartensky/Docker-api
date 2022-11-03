@@ -157,3 +157,11 @@ async def unpause(id: str):
     container = client.containers.get(id)
     container.unpause()
     return "unpaused"
+
+if __name__ == "__main__":
+    import os, uvicorn
+    uvicorn.run(
+        "app",
+        host=os.environ.get("HOST") or "localhost",
+        port=os.environ.get("PORT") or "8000"
+    )
