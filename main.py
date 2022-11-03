@@ -66,12 +66,20 @@ async def ps_all():
     containers = []
     for raw_container in client.containers.list():
         print(raw_container.__dict__)
+        health = None
+        if "Health" in raw_container.attrs["State"]:
+            health = raw_container.attrs["State"]["Health"]["Status"]
         container = dict(
             id=raw_container.id,
             name=raw_container.name,
-            image=str(raw_container.image.tags),
+            image=raw_container.image.tags,
             status=raw_container.status,
-            # ports=raw_container.ports,
+            started_at=raw_container.attrs["State"]["StartedAt"],
+            finished_at=raw_container.attrs["State"]["FinishedAt"],
+            health=health,
+            exposed_ports=list(raw_container.attrs["Config"]["ExposedPorts"].keys()),
+            ports=raw_container.attrs["NetworkSettings"]["Ports"],
+            networks=list(raw_container.attrs["NetworkSettings"]["Networks"].keys())
         )
         containers.append(container)
     print(containers)
