@@ -12,6 +12,7 @@ uvicorn = "*"
 black = "*"
 pylint = "*"
 jedi = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.9.4"

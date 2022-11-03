@@ -65,9 +65,18 @@ async def ps_all():
     """List all containers."""
     containers = []
     for raw_container in client.containers.list():
-        print(raw_container)
+        print(raw_container.__dict__)
+        container = dict(
+            id=raw_container.id,
+            name=raw_container.name,
+            image=str(raw_container.image.tags),
+            status=raw_container.status,
+            # ports=raw_container.ports,
+        )
+        containers.append(container)
     print(containers)
-    return [c.attrs for c in client.containers.list()]
+    # return [c.attrs for c in client.containers.list()]
+    return containers
 
 
 @app.get("/ps/ids")
@@ -166,4 +175,5 @@ if __name__ == "__main__":
         "app",
         host=os.environ.get("HOST") or "localhost",
         port=os.environ.get("PORT") or "8000",
+        log_level=os.environ.get("LOG_LEVEL") or "info",
     )
