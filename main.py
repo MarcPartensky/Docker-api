@@ -65,14 +65,12 @@ async def ps_all():
     """List all containers."""
     containers = []
     for raw_container in client.containers.list():
-        print(raw_container.__dict__)
         health = None
         if "Health" in raw_container.attrs["State"]:
             health = raw_container.attrs["State"]["Health"]["Status"]
         exposed_ports = None
         if "ExposedPorts" in raw_container.attrs["Config"]:
-            heatlh = raw_container.attrs["Config"]["ExposedPorts"]
-            exposed_ports=list(raw_container.attrs["Config"]["ExposedPorts"].keys()),
+            exposed_ports=list(raw_container.attrs["Config"]["ExposedPorts"].keys())
         container = dict(
             id=raw_container.id,
             name=raw_container.name,
@@ -82,12 +80,10 @@ async def ps_all():
             finished_at=raw_container.attrs["State"]["FinishedAt"],
             health=health,
             exposed_ports=exposed_ports,
-            ports=raw_container.attrs["NetworkSettings"]["Ports"],
+            ports=list(raw_container.attrs["NetworkSettings"]["Ports"].keys()),
             networks=list(raw_container.attrs["NetworkSettings"]["Networks"].keys())
         )
         containers.append(container)
-    print(containers)
-    # return [c.attrs for c in client.containers.list()]
     return containers
 
 
